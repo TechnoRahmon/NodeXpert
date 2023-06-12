@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QStyledItemDelegate, QAbstractItemView
+from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QStyledItemDelegate, QAbstractItemView, QHeaderView
 from PyQt5.QtCore import Qt, QRect
 
 
@@ -10,32 +10,55 @@ class TableItem:
         if not editable:
             self.item.setFlags(self.item.flags() & ~Qt.ItemIsEditable)
 
+
 class NodeVersionsTable(QTableWidget):
     def __init__(self, parent=None):
         self.Headers_Labels = ["Version", "Status", "Notes"]
         super().__init__(parent)
-        self.setFixedWidth(600)
-        self.setMaximumHeight(300)
         self.setSelectionMode(QAbstractItemView.NoSelection)
 
         self.setColumnCount(3)
+
         self.setHorizontalHeaderLabels(self.Headers_Labels)
         self.setColumnWidth(0, 100)
-        self.setColumnWidth(1, 100)
+        self.setColumnWidth(1, 75)
         self.setColumnWidth(2, 375)
+        # set the fixed width of the table to be 100% of the container
+        self.horizontalHeader().setSectionResizeMode(2,QHeaderView.Stretch)
 
     def setVersions(self, node_versions):
         self.clearContents()
         self.setRowCount(len(node_versions))
-        # self.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
-        columns = self.columnCount()
 
         for row, info in enumerate(node_versions):
             for index, headerLabel in enumerate(self.Headers_Labels):
                 editable = True if headerLabel == self.Headers_Labels[2] else False
                 tableItem = TableItem(info[headerLabel.lower()], editable)
+                tableItem.item.setTextAlignment(Qt.AlignCenter)
                 self.setItem(row, index, tableItem.item)
 
+        # Set the delegate for the status column
+        status_delegate = StatusDelegate()
+        self.setItemDelegateForColumn(1, status_delegate)
+
+        self.clearStatusCol()
+
+        self.resizeRowToContents(len(node_versions))
+
+        self.set_high(len(node_versions))
+
+    def set_high(self,node_count):
+        # set the table high from the length of the rows
+        self.setFixedHeight(45 * node_count + 8)
+        self.setMinimumHeight(200)
+
+    def clearStatusCol(self):
+        # Change the text of the second column (Age) for all rows
+        column_index = 1
+
+        for row in range(self.rowCount()):
+            item = self.item(row, column_index)
+            item.setText("")
 
     def update_notes(self, row):
         notes_item = self.table_widget.item(row, 2)
