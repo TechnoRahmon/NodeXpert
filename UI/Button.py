@@ -3,6 +3,10 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtCore import Qt
 
 
+# TODO ::
+# 1. custom render button like 'refresh icon'
+# 2. white panel to contain the button icon
+
 class CustomButton(QPushButton):
     def __init__(self, text='', background_color=None, width=None, on_click=None, bold_text=False):
         super().__init__(text)
