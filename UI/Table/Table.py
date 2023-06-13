@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QTableWidget, QAbstractItemView, QHeaderView
+from PyQt5.QtWidgets import QTableWidget, QAbstractItemView, QHeaderView, QSizePolicy
 from PyQt5.QtCore import Qt
 from UI.StatusDelegate import StatusDelegate
 from UI.Table.TableItem import TableItem
@@ -8,8 +8,8 @@ from UI.Table.TableItem import TableItem
 class NodeVersionsTable(QTableWidget):
     def __init__(self, parent=None):
         self.Headers_Labels = ["Version", "Status", "Notes"]
-        # to define which column is
-        self.exclude_fields = ["active"]
+        # to define which column is editable
+        self.Editable_columns = ["Notes"]
 
         super().__init__(parent)
         self.setSelectionMode(QAbstractItemView.NoSelection)
@@ -20,8 +20,14 @@ class NodeVersionsTable(QTableWidget):
         self.setColumnWidth(0, 100)
         self.setColumnWidth(1, 75)
         self.setColumnWidth(2, 375)
-        # set the fixed width of the table to be 100% of the container
+
+        # Set the stretch behavior of the columns
+        self.horizontalHeader().setSectionResizeMode(0, QHeaderView.Fixed)
+        self.horizontalHeader().setSectionResizeMode(1, QHeaderView.Fixed)
         self.horizontalHeader().setSectionResizeMode(2, QHeaderView.Stretch)
+
+        # Set the vertical size policy of the table widget
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
 
         # click event handler
         self.cellClicked.connect(self._status_click_handler)
@@ -33,7 +39,7 @@ class NodeVersionsTable(QTableWidget):
 
         for row, info in enumerate(node_versions):
             for index, headerLabel in enumerate(self.Headers_Labels):
-                editable = True if headerLabel in self.exclude_fields else False
+                editable = True if headerLabel in self.Editable_columns else False
                 content = '' if headerLabel == self.Headers_Labels[1] else info[headerLabel.lower()]
                 tableItem = TableItem(content, editable)
                 tableItem.item.setTextAlignment(Qt.AlignCenter)
@@ -51,10 +57,10 @@ class NodeVersionsTable(QTableWidget):
         self.setItemDelegateForColumn(1, status_delegate)
 
     def set_high(self, node_count):
-        # set the table high from the length of the rows
-        self.setFixedHeight(45 * node_count + 8)
-        self.setMinimumHeight(200)
+        self.setMinimumHeight(300)
 
+    # TODO :
+    # 1. Notes on change handler (save on enter key)
     def update_notes(self, row):
         notes_item = self.table_widget.item(row, 2)
         # new_notes, ok = QInputDialog.getText(self, "Update Notes", "Enter new notes:", QLineEdit.Normal,
