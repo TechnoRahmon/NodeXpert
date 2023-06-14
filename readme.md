@@ -6,13 +6,13 @@ NodeXpert is a program designed to manage and control Node.js versions on your s
 
 - View a list of installed Node.js versions.
 - Set the currently active Node.js version.
-#### upcoming features:
 - Add notes to each Node.js version for easy reference.
+#### upcoming features:
 - Manage and organize multiple Node.js installations.
 
 ## Installation
-
 1. Clone or download the NodeXpert repository from GitHub.
+
 2. Install the required dependencies by running the following command:
 
 ````commandline
@@ -28,7 +28,7 @@ python main.py
 ## Usage
 
 1. Upon launching **NodeXpert**, you will be presented with a graphical user interface (GUI) showing the list of installed Node.js versions.
-2. Use the buttons and options provided to manage the Node.js versions as needed. You can switch between versions for now, **add or edit notes will be available soon**, and perform other actions.
+2. Use the buttons and options provided to manage the Node.js versions as needed. You can switch between versions, add notes for each node version, and perform other actions.
 
 ## Contributing
 
