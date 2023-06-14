@@ -16,7 +16,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Node.js Versions")
-        self.screen_high = 800
+        self.screen_high = 600
         self.screen_width = 600
         self.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint | Qt.MSWindowsFixedSizeDialogHint)
         self.setGeometry(100, 100, self.screen_width, self.screen_high)

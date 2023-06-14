@@ -1,6 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QTableWidget, QAbstractItemView, QHeaderView, QSizePolicy
 from PyQt5.QtCore import Qt
+from Model.NodeVersion import NoteItem
 from UI.MessageBox import AlertType
 from UI.StatusDelegate import StatusDelegate
 from UI.Table.TableItem import TableItem
@@ -33,6 +34,9 @@ class NodeVersionsTable(QTableWidget):
         # click event handler
         self.cellClicked.connect(self._status_click_handler)
 
+        # change event handler
+        self.cellChanged.connect(self._update_notes_handler)
+
     def set_versions(self, node_versions):
         self.clearContents()
         self.setRowCount(len(node_versions))
@@ -62,12 +66,18 @@ class NodeVersionsTable(QTableWidget):
 
     # TODO :
     # 1. Notes on change handler (save on enter key)
-    def update_notes(self, row):
-        notes_item = self.table_widget.item(row, 2)
-        # new_notes, ok = QInputDialog.getText(self, "Update Notes", "Enter new notes:", QLineEdit.Normal,
-        #                                      notes_item.text())
-        # if ok:
-        #     notes_item.setText(new_notes)
+    def _update_notes_handler(self, row, column):
+        NOTE_COLUMN = self.Headers_Labels.index('Notes')
+        VERSION_COLUMN = self.Headers_Labels.index('Version')
+        if column == NOTE_COLUMN:
+            old_note = self.node_versions[row]['notes']
+            new_note = self.item(row, column).text()
+            # check if the update is a new update
+            if old_note != new_note:
+                version = self.item(row, VERSION_COLUMN).text()
+                note_item = NoteItem(new_note, version)
+                self.window_widget.nvm_controller.update_notes(note_item)
+
 
     def _status_click_handler(self, row, column):
         if (column == 1):

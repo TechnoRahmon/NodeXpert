@@ -26,7 +26,7 @@ class NvmController:
         except FileNotFoundError:
             data ={}
             for item in self.node_versions.versions:
-                data[item["version"]] = "DDD"
+                data[item["version"]] = ""
             self.node_versions.add_notes_list(data)
             json_data = json.dumps(data)
             self.save_file(json_data)
