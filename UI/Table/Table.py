@@ -64,8 +64,6 @@ class NodeVersionsTable(QTableWidget):
     def set_high(self, node_count):
         self.setMinimumHeight(300)
 
-    # TODO :
-    # 1. Notes on change handler (save on enter key)
     def _update_notes_handler(self, row, column):
         NOTE_COLUMN = self.Headers_Labels.index('Notes')
         VERSION_COLUMN = self.Headers_Labels.index('Version')

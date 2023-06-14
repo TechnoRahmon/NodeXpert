@@ -14,7 +14,6 @@ if __name__ == '__main__':
 
 
 # TODO:
-# NVM version buttons : if NVM not installed > disable the table list
 # Stop all node instance
 
 # v2
