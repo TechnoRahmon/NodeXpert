@@ -3,7 +3,7 @@ import json
 import settings
 from Model.NodeVersion import NodeVersion, NoteItem
 from Model.Process import Process, CommandType
-from Utils.ShellParser import parse_nvm_list_command
+from Utils.ShellParser import parse_nvm_list_command, parse_nvm_use_command
 
 
 class NvmController:
@@ -48,3 +48,11 @@ class NvmController:
             self.node_versions.add_versions_list(versions_list)
 
         return success
+
+    def set_new_active_version(self, version_number: str) -> tuple[bool, str]:
+        # prepare the nvm use command process
+        process = Process(command_type=CommandType.USE, version_number=version_number, admin_privileges=True)
+        # execute the process
+        success, output = process.communicate()
+        # pares the output of the terminal
+        return parse_nvm_use_command(output)

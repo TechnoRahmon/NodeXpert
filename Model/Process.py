@@ -9,8 +9,9 @@ class CommandType(Enum):
 
 
 class Process:
-    def __init__(self, command_type: CommandType):
-        self.command: str = command_type.value
+    def __init__(self, command_type: CommandType, version_number: str = None):
+        # get the full command
+        self.command: str = f"{command_type.value} {version_number}" if version_number else command_type.value
 
     def communicate(self) -> tuple[bool, str]:
         args = shlex.split(self.command)

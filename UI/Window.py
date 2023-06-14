@@ -1,8 +1,7 @@
 from enum import Enum
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout
-
+from PyQt5.QtWidgets import QMainWindow
 from Controller.NvmController import NvmController
 from .Label import CustomLabel
 from UI.Table.Table import NodeVersionsTable
@@ -21,8 +20,10 @@ class MainWindow(QMainWindow):
         self.screen_width = 600
         self.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint | Qt.MSWindowsFixedSizeDialogHint)
         self.setGeometry(100, 100, self.screen_width, self.screen_high)
+        # get the nvm controller
+        self.nvm_controller = NvmController()
         # set up a central widget and set the layout
-        self.top_layout = Widget(self,Qt.AlignTop).layout
+        self.top_layout = Widget(self, Qt.AlignTop).layout
 
         # define the layout components
         self.setup_components()
@@ -34,8 +35,6 @@ class MainWindow(QMainWindow):
             self.top_layout.addWidget(self.error_message)
         self.top_layout.addStretch(1)
         self.top_layout.addWidget(self.refresh_button)
-
-
 
     def setup_components(self):
         self.setup_title()
@@ -61,19 +60,19 @@ class MainWindow(QMainWindow):
         self.refresh_node_versions()
 
     def refresh_node_versions(self):
-        # get the nvm controller
-        nvm_controller = NvmController()
         # get the node versions list
-        node_versions = nvm_controller.get_node_versions_list()
+        node_versions = self.nvm_controller.get_node_versions_list()
         # set the list to the Table
         self.table_widget.set_versions(node_versions)
-
 
     def refresh_button_click(self):
         self.refresh_node_versions()
         if len(self.table_widget.node_versions) == 0:
-           error_alert = AlertBox(AlertType.ERROR,ErrorMessages.VersionsEmpty.value)
-           error_alert.exec_()
+            self.show_error_message(ErrorMessages.VersionsEmpty.value)
+
+    def show_alert_message(self, message: str, alert_type: AlertType = AlertType.INFO):
+        ask_privileges = AlertBox(alert_type, message, self)
+        ask_privileges.exec_()
 
     def setup_buttons(self):
         self.refresh_button = CustomButton(

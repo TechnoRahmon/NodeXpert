@@ -1,6 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QTableWidget, QAbstractItemView, QHeaderView, QSizePolicy
 from PyQt5.QtCore import Qt
+from UI.MessageBox import AlertType
 from UI.StatusDelegate import StatusDelegate
 from UI.Table.TableItem import TableItem
 
@@ -13,7 +14,7 @@ class NodeVersionsTable(QTableWidget):
 
         super().__init__(parent)
         self.setSelectionMode(QAbstractItemView.NoSelection)
-
+        self.window_widget = parent
         self.setColumnCount(3)
 
         self.setHorizontalHeaderLabels(self.Headers_Labels)
@@ -70,10 +71,18 @@ class NodeVersionsTable(QTableWidget):
 
     def _status_click_handler(self, row, column):
         if (column == 1):
-            # set new dict > all columns to inactive
-            status_column_index = 1  # Assuming the status column index is 1
+            # inactive all the versions in the table UI
             new_dict = list(map(lambda row: {**row, 'active': False}, self.node_versions))
             # set the active cell
             new_dict[row]['active'] = True
+            # get the version number
+            version_no = new_dict[row]['version']
+            # execute the nvm use command
+            status, message = self.window_widget.nvm_controller.set_new_active_version(version_no)
+            # if the execution is not succeeded, then alert with error message
+            if not status:
+                return self.window_widget.show_alert_message(message, AlertType.ERROR)
             # update the table
             self.set_versions(new_dict)
+            self.window_widget.show_alert_message(message)
+
