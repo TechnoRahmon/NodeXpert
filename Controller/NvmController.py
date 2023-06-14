@@ -1,4 +1,5 @@
 import json
+import os
 
 import settings
 from Model.NodeVersion import NodeVersion, NoteItem
@@ -24,6 +25,7 @@ class NvmController:
                 data = json.loads(file.read())
                 self.node_versions.add_notes_list(data)
         except FileNotFoundError:
+            self.check_file_center_dir()
             data ={}
             for item in self.node_versions.versions:
                 data[item["version"]] = ""
@@ -37,6 +39,7 @@ class NvmController:
         self.save_file(json_data)
 
     def save_file(self, notes: str):
+        # open file
         with open(settings.nvm_file_path, 'w') as file:
             file.write(notes)
 
@@ -56,3 +59,11 @@ class NvmController:
         success, output = process.communicate()
         # pares the output of the terminal
         return parse_nvm_use_command(output)
+
+    def check_file_center_dir(self):
+        directory = os.path.dirname(settings.nvm_file_path)
+
+        # Check if the directory exists
+        if not os.path.exists(directory):
+            # Create the directory if it doesn't exist
+            os.makedirs(directory)
