@@ -54,7 +54,7 @@ class NvmController:
 
     def set_new_active_version(self, version_number: str) -> tuple[bool, str]:
         # prepare the nvm use command process
-        process = Process(command_type=CommandType.USE, version_number=version_number, admin_privileges=True)
+        process = Process(command_type=CommandType.USE, version_number=version_number)
         # execute the process
         success, output = process.communicate()
         # pares the output of the terminal
