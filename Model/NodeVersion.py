@@ -11,11 +11,15 @@ class NodeVersion:
 
     def merge_all(self) -> list:
         new_list = []
-        for versionItem in self.versions:
-            versionNumber = versionItem['version']
-            new_list.append({**versionItem, 'notes': self.notes[versionNumber]})
-
+        if len(self.versions) > 1:
+          for versionItem in self.versions:
+              versionNumber = versionItem['version']
+              new_list.append({**versionItem, 'notes': self.notes[versionNumber]})
+        else:
+          self.versions[0]['notes'] = self.notes[self.versions[0]['version']]
+          new_list.append(self.versions[0])
         return new_list
+    
 
 
 class NoteItem:
