@@ -10,6 +10,13 @@ NodeXpert is a program designed to manage and control Node.js versions on your s
 #### upcoming features:
 - Manage and organize multiple Node.js installations.
 
+<br>
+
+## Download
+you can download the [NodeXpert](https://github.com/TechnoRahmon/NodeXpert/blob/main/NodeXpert_WINDOWS_1_1_setup.rar) , from this repo, and start the setup `NodeXpert_WINDOWS_1_1_setup.rar`.
+
+<br>
+
 ## Installation
 1. Clone or download the NodeXpert repository from GitHub.
 
