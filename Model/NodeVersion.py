@@ -13,7 +13,9 @@ class NodeVersion:
         new_list = []
         for versionItem in self.versions:
             versionNumber = versionItem['version']
-            new_list.append({**versionItem, 'notes': self.notes[versionNumber]})
+            # check if the versionNumber is not stored in the notes
+            new_note = self.notes[versionNumber] if versionNumber in self.notes else ""
+            new_list.append({**versionItem, 'notes': new_note})
 
         return new_list
 
