@@ -82,6 +82,8 @@ NodeXpert is released under the [MIT License](https://opensource.org/licenses/MI
 
 NodeXpert was developed by [Abdulrahman Muhialdeen](https://github.com/TechnoRahmon).
 
+<br/>
+
 ## Contact
 
 For any inquiries or support, please contact _**Abdulrahman Muhialdeen**_ at [contact](https://www.linkedin.com/in/technorahmon/).
