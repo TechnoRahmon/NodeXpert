@@ -13,7 +13,7 @@ NodeXpert is a program designed to manage and control Node.js versions on your s
 <br>
 
 ## Download
-you can download the [NodeXpert](https://github.com/TechnoRahmon/NodeXpert/blob/main/NodeXpert_WINDOWS_1_1_setup.rar) , from this repo, and start the setup `NodeXpert_WINDOWS_1_1_setup.rar`.
+you can download the NodeXpert, from this repo you should find the `NodeXpert.exe` in `/dist`
 
 <br>
 
@@ -31,6 +31,38 @@ you can download the [NodeXpert](https://github.com/TechnoRahmon/NodeXpert/blob/
 python main.py
 ```
 
+
+Certainly! Here's the revised section titled "How to Make a New Build":
+
+---
+
+## How to Make a New Build
+
+To make a new build of the application, follow these steps:
+
+1. **Clone the Repository**: Begin by cloning this repository to your local machine. Open a terminal or command prompt and execute the following command:
+    ```
+    git clone <repository_url>
+    ```
+
+2. **Navigate to the Project Directory**: Change your current directory to the project directory by running the following command:
+    ```
+    cd path/to/repository
+    ```
+
+3. **Run the Build Script**: Execute the `build.sh` script to initiate the build process. Enter the following command:
+    ```
+    ./build.sh
+    ```
+    This script automates the build process, creating a virtual environment, installing dependencies, building the executable, and generating a log file (`build.log`).
+
+4. **Verify Build Status**: After the script completes execution, verify the build status by checking the generated log file (`build.log`). If any errors occurred during the build process, review the log file for troubleshooting.
+
+5. **Access the Executable**: Upon successful completion of the build, navigate to the `dist` directory. Here, you'll find the generated executable file named `NodeXpert.exe`.
+
+6. **Run the Application**: Double-click the `NodeXpert.exe` file to launch the application.
+
+7. **Enjoy!**: Congratulations! You have successfully made a new build of the application. Enjoy using it!
 
 ## Usage
 
